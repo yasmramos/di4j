@@ -1,0 +1,11 @@
+com\univsoftdev\di4j\Cliente.class
+com\univsoftdev\di4j\CustomService.class
+com\univsoftdev\di4j\AppModule.class
+com\univsoftdev\di4j\InjectorTest$ServiceA.class
+com\univsoftdev\di4j\TestService.class
+com\univsoftdev\di4j\LazyService.class
+com\univsoftdev\di4j\AnotherService.class
+com\univsoftdev\di4j\AnotherServiceImpl.class
+com\univsoftdev\di4j\InjectorTest.class
+com\univsoftdev\di4j\InjectorTest$ServiceB.class
+com\univsoftdev\di4j\DatabaseConnection.class
