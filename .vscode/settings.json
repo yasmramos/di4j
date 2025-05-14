@@ -1,0 +1,14 @@
+{
+    "netbeans.jdkhome": "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full",
+    "netbeans.project.jdkhome": "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full",
+    "terminal.integrated.env.windows": {
+        "JAVA_HOME": "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full",
+        "PATH": "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full\\bin;${env:PATH}"
+    },
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full"
+        }
+    ]
+}
