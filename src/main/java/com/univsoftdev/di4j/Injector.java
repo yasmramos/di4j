@@ -114,7 +114,7 @@ public class Injector {
      * Default constructor initializing the injector with a default
      * configuration.
      */
-    public Injector() {
+    private Injector() {
         this(new Configuration());
     }
 
@@ -185,13 +185,15 @@ public class Injector {
         }
     }
 
-    public Injector(AbstractModule module) {
+    public Injector(Module... module) {
         this.configuration = new Configuration();
         this.componentClasses = new HashSet<>();
-        module.configure();
-        bindings.putAll(module.getBindings());
-        instances.putAll(module.getInstances());
-        providers.putAll(module.getProviders());
+        for (Module mod : module) {
+            mod.configure();
+        }
+        bindings.putAll(mod.getBindings());
+        instances.putAll(mod.getInstances());
+        providers.putAll(mod.getProviders());
     }
 
     /**
@@ -235,6 +237,10 @@ public class Injector {
      */
     public static Injector createInjector() {
         return new Injector(new Configuration());
+    }
+
+    public static Injector createInjector(Module... modules) {
+        return new Injector(modules);
     }
 
     /**
