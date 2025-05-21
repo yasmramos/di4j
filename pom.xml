@@ -63,4 +63,34 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Yasmany Ramos García</name>
+            <email>yasmramos95@gmail.com</email>
+            <organization>UnivSoftDev</organization>
+            <organizationUrl></organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://example.com/di4j/di4j.git</connection>
+        <developerConnection>scm:git:ssh://example.com/di4j/di4j.git</developerConnection>
+        <url>http://example.com/di4j/di4j</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/YOUR_USERNAME/YOUR_REPOSITORY</url>
+        </repository>
+    </distributionManagement>
 </project>

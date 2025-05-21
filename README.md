@@ -14,3 +14,14 @@ DI4J es un **framework ligero de inyección de dependencias** para Java, inspira
 
 ## **Instalación**  
 
+Para utilizar DI4J en tu proyecto Maven, agrega la siguiente dependencia a tu archivo `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.univsoftdev.di4j</groupId>
+    <artifactId>di4j</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+Asegúrate de reemplazar `1.0` con la versión más reciente si es necesario.
