@@ -6,6 +6,7 @@ import com.univsoftdev.di4j.annotations.*;
 @Component
 @Scope(ScopeType.SINGLETON)
 @Qualifier("primary")
+@Primary // Adding @Primary to see if it helps resolution in component scanning tests
 public class ServiceImpl implements ServiceInterface {
 
     @PostConstruct

@@ -185,15 +185,29 @@ public class Injector {
         }
     }
 
-    public Injector(Module... module) {
-        this.configuration = new Configuration();
-        this.componentClasses = new HashSet<>();
-        for (Module mod : module) {
-            mod.configure();
+    public Injector(Module... modules) {
+        this.configuration = new Configuration(); // Assuming a default configuration
+        this.componentClasses = new HashSet<>(); // Initialize componentClasses
+        Binder centralBinder = new Binder();
+
+        for (Module module : modules) {
+            module.configure(centralBinder);
         }
-        bindings.putAll(mod.getBindings());
-        instances.putAll(mod.getInstances());
-        providers.putAll(mod.getProviders());
+
+        // Populate Injector's maps from the centralBinder
+        this.bindings.putAll(centralBinder.getBindings());
+        this.instances.putAll(centralBinder.getInstances());
+        this.providers.putAll(centralBinder.getProviders());
+        
+        // Initialize non-lazy singletons after module bindings are processed
+        // and before any auto-detected components might be processed if you were to add that.
+        // This ensures module-defined singletons are ready.
+        // Note: The existing initializeNonLazySingletons() might need adjustment
+        // if it relies on beanDefinitions populated by component scanning,
+        // which hasn't happened yet in this constructor.
+        // For now, let's assume module-bound instances/providers handle their own lifecycle
+        // or are simple enough not to need the full beanDefinition lifecycle immediately.
+        // If module-bound items need full lifecycle (e.g. @PostConstruct), this needs more thought.
     }
 
     /**

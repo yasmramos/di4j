@@ -1,80 +1,43 @@
 package com.univsoftdev.di4j;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 
-public abstract class AbstractModule implements Module{
-    
-    private Binder binder;
-    
-    private final Map<Class<?>, Class<?>> bindings = new HashMap<>();
-    private final Map<Class<?>, Object> instances = new HashMap<>();
-    private final Map<Class<?>, Supplier<?>> providers = new HashMap<>();
-    private final List<InterceptorBinding> interceptors = new ArrayList<>();
+public abstract class AbstractModule implements Module {
+    protected Binder binder;
 
-    
+    @Override
+    public final void configure(Binder binder) { // Made final to ensure binder is set
+        this.binder = binder;
+        configureBindings();
+    }
+
     /**
-     * Binds an interface or base class to a concrete implementation.
+     * Subclasses must implement this method to define their bindings.
+     * They can use the protected `bind`, `bindInstance`, `bindProvider` methods.
      */
+    protected abstract void configureBindings(); // Subclasses define bindings here
+
     protected <T> void bind(Class<T> baseType, Class<? extends T> implementation) {
-        bindings.put(baseType, implementation);
+        if (this.binder == null) throw new IllegalStateException("Binder not initialized. Ensure configure() was called.");
+        this.binder.bind(baseType, implementation);
     }
 
-    /**
-     * Binds a specific instance to a type.
-     */
     protected <T> void bindInstance(Class<T> baseType, T instance) {
-        instances.put(baseType, instance);
+        if (this.binder == null) throw new IllegalStateException("Binder not initialized.");
+        this.binder.bindInstance(baseType, instance);
     }
 
-    /**
-     * Binds a provider (Supplier) for dynamic instance creation.
-     */
     protected <T> void bindProvider(Class<T> baseType, Supplier<T> provider) {
-        providers.put(baseType, provider);
+        if (this.binder == null) throw new IllegalStateException("Binder not initialized.");
+        this.binder.bindProvider(baseType, provider);
     }
 
-    /**
-     * Binds an interceptor to methods matching a given pattern.
-     */
-    protected void bindInterceptor(Matcher<Class<?>> classMatcher, Matcher<Method> methodMatcher, MethodInterceptor... interceptors) {
-        this.interceptors.add(new InterceptorBinding(classMatcher, methodMatcher, interceptors));
-    }
+    // bindInterceptor and its getter are removed for now.
 
-    /**
-     * Retrieves all bindings.
-     */
-    public Map<Class<?>, Class<?>> getBindings() {
-        return bindings;
+    protected void install(Module module) {
+        if (this.binder == null) {
+            throw new IllegalStateException("Binder not initialized. Ensure configure() was called before installing modules.");
+        }
+        this.binder.install(module);
     }
-
-    /**
-     * Retrieves all instances.
-     */
-    public Map<Class<?>, Object> getInstances() {
-        return instances;
-    }
-
-    /**
-     * Retrieves all providers.
-     */
-    public Map<Class<?>, Supplier<?>> getProviders() {
-        return providers;
-    }
-
-    /**
-     * Retrieves all interceptors.
-     */
-    public List<InterceptorBinding> getInterceptors() {
-        return interceptors;
-    }
-
-    /**
-     * Abstract method for configuration.
-     */
-    protected abstract void configure();
 }
